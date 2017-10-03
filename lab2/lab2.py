@@ -182,12 +182,6 @@ def a_star(graph, start, goal):
 # heuristic.  You've seen graphs with heuristics that are
 # admissible, but not consistent.  Have you seen any graphs that are
 # consistent, but not admissible?
-# You've learned that in order for the
-# heuristic to be admissible, the heuristic value for every node in a graph must be less than or equal to the
-# distance of the shortest path from the goal to that node.
-# #In order for a heuristic to be consistent, for each
-# edge in the graph, the edge length must be greater than or equal to the absolute value of the difference
-# between the two heuristic values of its nodes.
 
 def is_admissible(graph, goal):
     for node in graph.nodes:
