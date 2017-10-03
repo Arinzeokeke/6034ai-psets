@@ -208,7 +208,7 @@ black_family_cousins = [
     if "cousin" in x ]
 
 # To see if you found them all, uncomment this line:
-print black_family_cousins
+#print black_family_cousins
 
 # To debug what happened in your rules, you can set verbose=True
 # in the function call above.
@@ -257,4 +257,3 @@ from backchain import backchain_to_goal_tree
 HOW_MANY_HOURS_THIS_PSET_TOOK = '2'
 WHAT_I_FOUND_INTERESTING = 'last question'
 WHAT_I_FOUND_BORING = 'nothing'
-

@@ -15,28 +15,10 @@ from zookeeper import ZOOKEEPER_RULES
 
 
 def backchain_to_goal_tree(rules, hypothesis):
+    #pseudocode
     # make a lists of antes from rules with subs that 
     # match our hyp
-    matched_rules = []
-    for rule in rules:
-        consequent = list(rule.consequent())
-        #print consequent, hypothesis
-        mapping = [ match(each, hypothesis) for each in consequent if match(each, hypothesis) or hypothesis == each ]
-        if mapping:
-            mapping = mapping[0]
-            print mapping
-            antecedent = rule.antecedent()
-            print antecedent
-            if isinstance(antecedent, str):
-                matched_rule = AND([populate(antecedent, mapping)])
-            else:
-                matched_rule = type(antecedent)([ populate(x, mapping) for x in list(antecedent) ])
-            matched_rules.append(matched_rule)
-
     # if nothing found, return the hyp
-    if not matched_rules:
-        return hypothesis
-    return simplify(OR([ hypothesis ] + [ type(hyp)([backchain_to_goal_tree(rules, each) for each in hyp]) for hyp in matched_rules ]))
 
     # else (if something found. we have a list of antecs)
     # return an OR of current hypothesis joined with
@@ -45,6 +27,30 @@ def backchain_to_goal_tree(rules, hypothesis):
     # a recursive call
         # return OR( [ backchain_to_goal_tree(rules, hyp) for hyp in matched_rules])
 
+    matched_rules = []
+    for rule in rules:
+        consequent = list(rule.consequent())
+        #print consequent, hypothesis
+        mapping = [ match(each, hypothesis) for each in consequent if match(each, hypothesis) or hypothesis == each ]
+        if mapping:
+            mapping = mapping[0]
+            #print mapping
+            antecedent = rule.antecedent()
+            print antecedent
+            if isinstance(antecedent, str):
+                matched_rule = AND([populate(antecedent, mapping)])
+            else:
+                matched_rule = type(antecedent)([ populate(x, mapping) for x in list(antecedent) ])
+            matched_rules.append(matched_rule)
+
+    
+    if not matched_rules:
+        return hypothesis
+    return simplify(OR([ hypothesis ] + [ type(hyp)([backchain_to_goal_tree(rules, each) for each in hyp]) for hyp in matched_rules ]))
+
+        
+
+
 # Here's an example of running the backward chainer - uncomment
 # it to see it work:
-print backchain_to_goal_tree(ZOOKEEPER_RULES, 'opus is a penguin')
+#print backchain_to_goal_tree(ZOOKEEPER_RULES, 'opus is a penguin')
